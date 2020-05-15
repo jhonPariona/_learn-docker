@@ -85,6 +85,12 @@ $ docker container  run -d <nameImage>:<version> <comando>
 # Asignar un nombre al container(por defecto docker asigna nombres aleatorios)
 $ docker container run --name mycentos <nameImage>:<version>
 
+# Correr container mostrando entrada shell
+$ docker container -it <nameImage>:<version>
+#para salir presionar crtl + p + q
+#para volver a entra
+$ docker attach <nameContainer ID>
+
 # Mostrar contenedores activos
 $ docker container ls
 $ docker ps #deprecada ya no debe usarse

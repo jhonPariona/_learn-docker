@@ -79,15 +79,15 @@ $ docker container run <nameImage>:<versión> <comando bash a ejecutar>
 docker container run centos:6 ls -ltr
 
 # Correr container en segundo plano
-$ docker container -detach run <nameImage>:<version> <comando>
-$ docker container -d run <nameImage>:<version> <comando>
+$ docker container  run -detach <nameImage>:<version> <comando>
+$ docker container  run -d <nameImage>:<version> <comando>
 
 # Asignar un nombre al container(por defecto docker asigna nombres aleatorios)
 $ docker container run --name mycentos <nameImage>:<version>
 
 # Mostrar contenedores activos
 $ docker container ls
-$ docker ps
+$ docker ps #deprecada ya no debe usarse
 
 # Mostrar todos los contenedores
 $ docker container ls -a
@@ -125,4 +125,10 @@ $ docker cp <nameContainer ID>:</PATHCONTAINER> <PathLocal>
 
 # Muestra estadísticas del container
 $ docker stats <nameContainer ID>
+
+# mostrar los logs generados hasta el momento
+$ docker container logs --details <nameContainer>
+
+#Mostrar logs en tiempo real
+$ docker container logs --follow <nameContainer>
 ```

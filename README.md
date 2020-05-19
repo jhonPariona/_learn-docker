@@ -138,3 +138,81 @@ $ docker container logs --details <nameContainer>
 #Mostrar logs en tiempo real
 $ docker container logs --follow <nameContainer>
 ```
+
+## 🔐 Seguridad en docker
+
+[📎 Diapos de keepcoding](https://drive.google.com/open?id=1UQwWTItscGiQJewMReRMZIbYgffxtOYF)
+
+🦜 **namespaces** Tener separado los procesos los contenedores no pueden ver otros, tbn se puede
+hacer con redes de los contenedores.
+
+🦜 **cgroups** limitar memoria del docker, uso de red
+
+🦜 **linux capabilities** limitar que usuarios se ejecutan dentro del container(no arrancar como root dentro del container)
+
+### [Docker Capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html)
+
+Limitar las acciones que pueden realizar los usuarios
+
+🦜usar libcap:
+
+```bash
+sudo apt install libcap-dev libcap-ng-dev libcap-ng-utils
+```
+
+```bash
+# eliminar una capability
+docker run --rm -it --cap-drop <$CAP sin el CAP> <Imagen> <comando shell>
+
+# agregar una capability
+docker run --rm -it --cap-add <$CAP sin el CAP> <Imagen> <comando shell>
+
+#eliminar todo y agregar algunos con comas
+docker run --rm -it --cap-drop ALL --cap-add CHOWN alpine sh
+docker run --rm -it --cap-drop ALL --cap-add CHOWN ubuntu bash
+```
+
+### [Docker Network](https://docs.docker.com/network/#network-drivers)
+
+Limitar el acceso a internet del container
+
+```bash
+#por defecto
+docker run -it --network=bridge python /bin/bash
+
+#quitar internet
+docker run -it --net=none python /bin/bash
+```
+
+### Ver que comando a ejecutado el container
+
+```bash
+docker history <nameImage>
+```
+
+### Verificar que ejecuta y que instala una imagen de docker hub
+
+[📎 Microbadger](https://microbadger.com/)
+
+## Docker content Trust
+
+Forma en que docker prueba firmas de las imagenes que descargas
+
+```bash
+export DOCKER_CONTENT_TRUST=1
+# Al hacer pull lo primero que hace es comprobar la firma sha
+# nginx:latest@sha256:30dfa439718a17baafefadf16c5e7c9d0a1cde97b4fd84f63b69e13513be7097
+#sha256:30dfa439718a17baafefadf16c5e7c9d0a1cde97b4fd84f63b69e13513be7097: Pulling from library/nginx
+```
+
+## Docker File Security
+
+Incorporar gpg del proveedor para comprobar el soft que instalamos
+
+ejecutar imagenes read-only
+
+no ejecutar el container como root
+
+habilitar user-namespaces
+
+crear usuarios específicos
